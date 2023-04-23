@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:park_here/signup.dart';
 import 'login.dart';
 import 'dashboard.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(loading());
 }
 
@@ -49,7 +56,7 @@ class _homeState extends State<home> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => lgin()),
+                      MaterialPageRoute(builder: (context) => sign()),
                     );
                   },
                   child: Text(

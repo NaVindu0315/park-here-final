@@ -1,10 +1,15 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:park_here/availability.dart';
+import 'package:park_here/booking_screen.dart';
 import 'package:park_here/paynow.dart';
+import 'package:park_here/send.dart';
+import 'package:park_here/stream.dart';
 import 'ptime.dart';
 import 'login.dart';
 import 'paynow.dart';
 import 'availability.dart';
+import 'booking_screen.dart';
 
 void main() {
   runApp(rsvpage());
@@ -25,19 +30,25 @@ class rsvpage extends StatelessWidget {
 ///statfull widget
 
 class rsv extends StatefulWidget {
-  const rsv({Key? key}) : super(key: key);
-
   @override
   State<rsv> createState() => _rsvState();
 }
 
 class _rsvState extends State<rsv> {
-  int _currentIndex = 0;
+  late DatabaseReference pglink;
 
-  // final List<Widget> _children = [ Home(), Explore(), Notifications(),    Profile()  ];
-  void onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index;
+  String pgadrs = 'google.com';
+
+  @override
+  void initState() {
+    super.initState();
+
+    ///name
+    pglink = FirebaseDatabase.instance.reference().child('page');
+    pglink.onValue.listen((event) {
+      setState(() {
+        pgadrs = event.snapshot.value.toString();
+      });
     });
   }
 
@@ -45,36 +56,6 @@ class _rsvState extends State<rsv> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        bottomNavigationBar: BottomNavigationBar(
-          selectedItemColor: Colors.red, // set the color of the selected item
-          unselectedItemColor:
-              Colors.black, // set the color of the unselected items
-          selectedLabelStyle: TextStyle(
-              fontWeight:
-                  FontWeight.normal), // set the style of the selected item
-          unselectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
-          backgroundColor: Color(0xFFFFD101),
-          onTap: onTabTapped,
-          type: BottomNavigationBarType.fixed,
-          items: [
-            BottomNavigationBarItem(
-              label: 'Home',
-              icon: Icon(Icons.home),
-            ),
-            BottomNavigationBarItem(
-              label: 'Reserve',
-              icon: Icon(Icons.car_crash_rounded),
-            ),
-            BottomNavigationBarItem(
-              label: 'Pay',
-              icon: Icon(Icons.money_rounded),
-            ),
-            BottomNavigationBarItem(
-              label: 'User',
-              icon: Icon(Icons.person),
-            ),
-          ],
-        ),
         appBar: AppBar(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
@@ -106,86 +87,94 @@ class _rsvState extends State<rsv> {
           backgroundColor: Color(0xFFFFD101),
         ),
         body: SingleChildScrollView(
-          child: Expanded(
-            child: Column(
-              children: <Widget>[
-                SizedBox(
-                  height: 20.0,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextButton(
-                        onPressed: null,
-                        child: Image.asset('images/cvr.png'),
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 30.0,
-                ),
-                ////first two images
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => avl()),
-                          );
-                        },
-                        child: Image.asset('images/1.png'),
-                      ),
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: 20.0,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SendDataPage()),
+                        );
+                      },
+                      child: Image.asset('images/cvr.png'),
                     ),
-                    ////second image
-                    Expanded(
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => stoppage()),
-                          );
-                        },
-                        child: Image.asset('images/2.png'),
-                      ),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 30.0,
+              ),
+              ////first two images
+              Row(
+                children: [
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+
+                          ///me line eka maru krpn
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  WebViewPage(url: '$pgadrs')),
+                        );
+                      },
+                      child: Image.asset('images/1.png'),
                     ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                ////second image row
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => lgin()),
-                          );
-                        },
-                        child: Image.asset('images/3.png'),
-                      ),
+                  ),
+                  ////second image
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => bk()),
+                        );
+                      },
+                      child: Image.asset('images/2.png'),
                     ),
-                    ////second image
-                    Expanded(
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => pypage()),
-                          );
-                        },
-                        child: Image.asset('images/4.png'),
-                      ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              ////second image row
+              Row(
+                children: [
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => lgin()),
+                        );
+                      },
+                      child: Image.asset('images/3.png'),
                     ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                  ////second image
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => pypage()),
+                        );
+                      },
+                      child: Image.asset('images/4.png'),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
