@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "123752771624",
+    "project_id": "parkhere-45a92",
+    "storage_bucket": "parkhere-45a92.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123752771624:android:8d4ee3e873ef814ea8451d",
+        "android_client_info": {
+          "package_name": "com.navindu.park_here"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "123752771624-0l75qk164icbld4mr0690eoqgghmq3sv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2b6S-pFgqTpo-Ju1lfoImsG-XrzNUC1w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "123752771624-0l75qk164icbld4mr0690eoqgghmq3sv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
